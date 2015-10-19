@@ -4,8 +4,11 @@
     <a href='#' ng-click="cancelControl()"><span class='pull-right'>X</span></a>
   </div>
   <div id='pomodoro_body'>
-    <div id='display' class='text-right text-bottom'>
-      <h2>{{ input }}</h2>
+    <div id='display' class='text-right h2'>
+      {{ display }}
+    </div>
+    <div id='input' class='text-right h2'>  <!-- text-bottom does not do anything-->
+      {{ input }}
     </div>
     <div id='keypad'>
       <div id='first_row' class='navbar navbar-default'>

@@ -237,15 +237,13 @@ app.directive('calculator', function() {
         history.pop()
         var keypresses = history
         history = []
-        console.log("DRT")
         console.log(history)     
         keypresses.forEach(function(keypress) {
           console.log(keypress)
         })        
         $scope.clear()
-        console.log("here")
         keypresses.forEach(function(keypress) {
-          console.log("$scope."+keypress)
+          //console.log("$scope."+keypress)
           eval("$scope."+keypress)
         })
       }
@@ -255,7 +253,7 @@ app.directive('calculator', function() {
         console.log("displayControl() invoked")
         $scope.controlDisplay = true
         $scope.event          = 1
-        $scope.hoverMessage   = 'Use the dashboard to start a task'
+        $scope.hoverMessage   = 'Use the calculator to have some fun'
       }
 
       $scope.cancelControl = function() {
