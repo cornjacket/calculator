@@ -16,7 +16,7 @@ app.controller("MainController", function($scope, $interval) {
   
 
   var messages = [
-        "Click the tomato.",
+        "Click the calculator.",
         "Excellent!! Now use the calculator.",
 
       ]
@@ -46,7 +46,6 @@ app.directive('calculator', function() {
     controller: function($scope, $interval) {
       console.log("inside calculator controller")
 
- 
       $scope.input   = '' // user input
       $scope.display = '' // user input after submit is entered by user, cleared after key entry
 // could add DecimalPointJustEntered boolean to take care of this case 3.) 3.+
@@ -75,19 +74,37 @@ app.directive('calculator', function() {
 
       var history          = []
 
+      $scope.moreThanMaxInput   = false
+      $scope.moreThanMaxDisplay = false
+
+      checkLength = function() {
+        console.log("checkLength() invoked")
+        $scope.moreThanMaxInput = ($scope.input.length > 13) ? true : false
+        $scope.moreThanMaxDisplay = ($scope.display.length > 13) ? true : false 
+      }
+
+      notTooManyInputCharacters = function() {
+        // will check for < 16
+        // if false will then check if more than 2 digits to the right of decimal and crop to 2 digits
+        return $scope.input.length < 16
+      }
+
       $scope.clear = function() {
-        $scope.input     = ''
+        $scope.moreThanMaxInput = false  // are these needed here
+        $scope.moreThanMaxDisplay = false
+        $scope.input     = ''   // dispay zeroed out in all_false()
         all_false()
         openParenCount   = 0
         decimalEntered   = false
         console.log($scope.input)
         console.log(history)
         history = []
+        checkLength()
       }
 
-
       $scope.number = function(value) {          
-          console.log("number("+value+") invoked")
+        console.log("number("+value+") invoked")
+        if (notTooManyInputCharacters()) {
           if (submitJustExecuted) { // user wants to ignore result from previous submit
             $scope.clear()
           }
@@ -102,133 +119,151 @@ app.directive('calculator', function() {
             acceptingNumber  = true
             console.log($scope.input)
           }
+          checkLength()
+        }
       }
 
 
       $scope.operator = function(value) {
           
 // what about acceptingNumber not asserted, what will happen
-
-          console.log("operator("+value+") invoked")
+        
+        console.log("operator("+value+") invoked")
+        if (notTooManyInputCharacters()) {
           if (acceptingNumber || parenJustClosed) { // end of the number
             history.push("operator('"+value+"')")
+            //if (value == '/') value = '\367' //this works for display but not for eval, so i would need to build an eval
+            // version, same for multiply if i choose a different icon that *
             $scope.input += value
             all_false() 
             operatorAccepted = true
           } 
           console.log($scope.input)
+          checkLength()
+        }
       }
 
       $scope.decimalPoint = function() {
                
         console.log("decimalPoint() invoked")
-        if (submitJustExecuted) { // user wants to ignore result from previous submit
-          $scope.clear()
-        }  
-        // sometimes . will not be valid given the context - not valid if number already has a decimal
-        if (!parenJustClosed) { // prevent following case: (3+4) 0.
-          history.push("decimalPoint()") 
-          if (!decimalEntered) { // only add a decimal if the number doesnt already have one
-            if (acceptingNumber) { // not the first digit
-              $scope.input += '.'
-            } else { // first digit
-               $scope.input += ' 0.'    
+        if (notTooManyInputCharacters()) {
+          if (submitJustExecuted) { // user wants to ignore result from previous submit
+            $scope.clear()
+          }  
+          // sometimes . will not be valid given the context - not valid if number already has a decimal
+          if (!parenJustClosed) { // prevent following case: (3+4) 0.
+            history.push("decimalPoint()") 
+            if (!decimalEntered) { // only add a decimal if the number doesnt already have one
+              if (acceptingNumber) { // not the first digit
+                $scope.input += '.'
+              } else { // first digit
+                 $scope.input += ' 0.'    
+              }
+              all_false()
+              acceptingNumber = true
+              decimalEntered = true
             }
-            all_false()
-            acceptingNumber = true
-            decimalEntered = true
-          }
 
-        }        
+          }
+          checkLength()
+        }
       }
       
       $scope.paren = function() {
-        history.push("paren()") // paren is always accepted
-        if (openParenCount === 0) {
-          console.log("Parens A")
-          if (acceptingNumber || parenJustClosed) {  // 3( => 3*(  or (a+b)( => (a+b)*(
-            console.log("Parens B")
-            $scope.input += '*'
-          }
-          $scope.input += '('
-          all_false()
-          openParenCount = 1
-          parenJustOpened = true
-          decimalEntered  = false
-        } else { // more open parens than closing parens
-            if (acceptingNumber) {   // ( ...... 4567 )
-              console.log("Parens C")
-              $scope.input += ')'
-              all_false()
-              parenJustClosed = true
-              decimalEntered  = false
-              openParenCount -= 1
-            } else if (parenJustOpened) {  // (( -> (( instead of ()  
-                console.log("Parens E")
-                $scope.input += '('
-                all_false()
-                parenJustOpened = true
-                decimalEntered  = false
-                openParenCount += 1
-            } else if (operatorAccepted) // ( ...... 4567 + (
-               {                 
-                console.log("Parens D")
-                $scope.input += '('
-                all_false()
-                parenJustOpened = true
-                decimalEntered  = false
-                openParenCount += 1
-            } else { // ( 3 + (4 + 2) )   
-                console.log("Parens F")
+        if (notTooManyInputCharacters()) {
+          history.push("paren()") // paren is always accepted
+          if (openParenCount === 0) {
+            console.log("Parens A")
+            if (acceptingNumber || parenJustClosed) {  // 3( => 3*(  or (a+b)( => (a+b)*(
+              console.log("Parens B")
+              $scope.input += '*'
+            }
+            $scope.input += '('
+            all_false()
+            openParenCount = 1
+            parenJustOpened = true
+            decimalEntered  = false
+          } else { // more open parens than closing parens
+              if (acceptingNumber) {   // ( ...... 4567 )
+                console.log("Parens C")
                 $scope.input += ')'
                 all_false()
                 parenJustClosed = true
                 decimalEntered  = false
                 openParenCount -= 1
-            }
+              } else if (parenJustOpened) {  // (( -> (( instead of ()  
+                  console.log("Parens E")
+                  $scope.input += '('
+                  all_false()
+                  parenJustOpened = true
+                  decimalEntered  = false
+                  openParenCount += 1
+              } else if (operatorAccepted) // ( ...... 4567 + (
+                 {                 
+                  console.log("Parens D")
+                  $scope.input += '('
+                  all_false()
+                  parenJustOpened = true
+                  decimalEntered  = false
+                  openParenCount += 1
+              } else { // ( 3 + (4 + 2) )   
+                  console.log("Parens F")
+                  $scope.input += ')'
+                  all_false()
+                  parenJustClosed = true
+                  decimalEntered  = false
+                  openParenCount -= 1
+              }
+          }
+          checkLength()
         }
-
       }
 
       $scope.negative = function() {               
         console.log("negative() invoked")
-        if (negativeJustExecuted) {
-          console.log("Negative just executed. Remove last negative() call")
-          $scope.backspace()
-        } else {
-          history.push("negative()")
-          if (acceptingNumber || parenJustClosed) {  // 3( => 3*(  or (a+b)( => (a+b)*(
-            console.log("Parens B")
-            $scope.input += '*'
-          }         
-          $scope.input += '(-'
-          all_false()
-          parenJustOpened = true
-          openParenCount += 1      
-          negativeJustExecuted = true
+        if (notTooManyInputCharacters()) {
+          if (negativeJustExecuted) {
+            console.log("Negative just executed. Remove last negative() call")
+            $scope.backspace()
+          } else {
+            history.push("negative()")
+            if (acceptingNumber || parenJustClosed) {  // 3( => 3*(  or (a+b)( => (a+b)*(
+              console.log("Parens B")
+              $scope.input += '*'
+            }         
+            $scope.input += '(-'
+            all_false()
+            parenJustOpened = true
+            openParenCount += 1      
+            negativeJustExecuted = true
+          }
+          checkLength()
         }
       }
 
       $scope.submit = function() {               
         console.log("submit() invoked")
-        // dont accept if just received an operator
-        if (!operatorAccepted) { // prevent this case: 3 + submit OR ( 3 + submit => ( 3 + )
-          // close open parens
-          while (openParenCount) {
-            console.log("before openParenCount = "+openParenCount)            
-            $scope.paren() // paren() will decrement openParenCount
-            console.log("after openParenCount = "+openParenCount)
+        if (notTooManyInputCharacters()) {
+          // dont accept if just received an operator
+          if (!operatorAccepted) { // prevent this case: 3 + submit OR ( 3 + submit => ( 3 + )
+            // close open parens
+            while (openParenCount) {
+              console.log("before openParenCount = "+openParenCount)            
+              $scope.paren() // paren() will decrement openParenCount
+              console.log("after openParenCount = "+openParenCount)
+            }
+            $scope.display = $scope.input; // display shows the input of the previous operation, first time it is null
+            $scope.input = eval($scope.input).toString() // convert to string for length check to function in checkLength()
+            console.log("display = "+$scope.display)
+            console.log("input = "+$scope.input)
+            history = []
+            history.push("number("+$scope.input+")")
+            console.log(history)
+            // no need for all_false() because parens above keeps state correct, and if no parens (ie simple number) we are in
+            // good state already
+            submitJustExecuted = true // this must be last, result is available to user if they enter an operator/parens
           }
-          $scope.display = $scope.input; // display shows the input of the previous operation, first time it is null
-          $scope.input = eval($scope.input)
-          console.log("display = "+$scope.display)
-          console.log("input = "+$scope.input)
-          history = []
-          history.push("number("+$scope.input+")")
-          console.log(history)
-          // no need for all_false() because parens above keeps state correct, and if no parens (ie simple number) we are in
-          // good state already
-          submitJustExecuted = true // this must be last, result is available to user if they enter an operator/parens
+          checkLength()
         }
       }      
 
@@ -246,6 +281,7 @@ app.directive('calculator', function() {
           //console.log("$scope."+keypress)
           eval("$scope."+keypress)
         })
+        checkLength()
       }
 
 

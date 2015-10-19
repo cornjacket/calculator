@@ -1,13 +1,13 @@
 <div id='pomodoro_tile' ng-show='controlDisplay'>
   <div id='pomodoro_header'>
-    <img src='images/pomodoro.png' width='20px'>
+    <img src='http://dts.utah.gov/img/icon-calculator.png' width='20px'>
     <a href='#' ng-click="cancelControl()"><span class='pull-right'>X</span></a>
   </div>
   <div id='pomodoro_body'>
-    <div id='display' class='text-right h2'>
+    <div id='display' class='text-right' ng-class="moreThanMaxDisplay ? 'h3' : 'h2'">
       {{ display }}
     </div>
-    <div id='input' class='text-right h2'>  <!-- text-bottom does not do anything-->
+    <div id='input' class='text-right' ng-class="moreThanMaxInput ? 'h3' : 'h2'">
       {{ input }}
     </div>
     <div id='keypad'>
@@ -15,9 +15,9 @@
         <div class='container-fluid'>  <!-- class is container has no effect on the gray strip -->
             <ul class='nav navbar-nav'>
               <li><a ng-click='clear()' href='#'><div class='text-center key-button'>C</div></a></li>
-              <li><a ng-click='operator("/")' href='#'><div class='text-center key-button'>/</div></a></li>
-              <li><a ng-click='operator("*")' href='#'><div class='text-center key-button'>X</div></a></li>
-              <li><a ng-click='backspace()' href='#'><div><span class='glyphicon glyphicon-plus text-center' aria-hidden='true'></span></div></a></li>
+              <li><a ng-click='operator("/")' href='#'><div class='text-center key-button'>&divide;</div></a></li>
+              <li><a ng-click='operator("*")' href='#'><div class='text-center key-button'><i class="fa fa-times"></i></div></a></li>
+              <li><a ng-click='backspace()' href='#'><div class='text-center'><i class="fa fa-step-backward fa-lg"></i></div></a></li>
             </ul>
         </div>
       </div>
@@ -73,7 +73,7 @@
   <div class='red_tomato' ng-click='displayControl()'>
     <div class='tomato_container'>
       <div class='red_countdown text-center' ng-class="{'red_single_countdown':singleCountdown}"><strong>{{tomatoTime}}</strong></div>
-      <img src='images/pomodoro.png' width='60px'>
+      <img src='http://dts.utah.gov/img/icon-calculator.png' width='60px'>
     </div>
   </div>
 </a>
