@@ -1,0 +1,323 @@
+html {
+  height: 100%;
+  /*background: url("http://www.drlamperti.com/uploads/images/peter-griffin-family-guy-cleft-chin-photo.jpg");*/
+  /*background: url("images/ksw_01.jpg");*/
+  background: url("images/star_destroyer_bridge.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: left bottom;
+}
+
+#darth_stewie {
+  position: fixed;
+  bottom: 2%;
+  left: 3%;
+}
+
+#instructions {
+  position: fixed;
+  width: 400px;
+  bottom: 33%; /*270px;*/
+  left: 19%;
+}
+
+#pomodoro_tile {
+  position: fixed;
+  top: 40px;
+  right: 200px;
+  width: 263px;
+  height: 400px; 
+  padding: 0;
+  z-index: 99998;
+  border: 1px solid gray;
+  border-radius: 5px;
+
+  box-shadow: 7px 7px 5px  #A0A0A0; /*#888888; #B0B0B0; */
+
+  /* fallback */
+  background-color: #1a82f7;
+  /*background: url(images/linear_bg_2.png);*/
+  background-repeat: repeat-x;
+  /* Safari 4-5, Chrome 1-9 */
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1a82f7), to(#F0F0F0));
+  /* Safari 5.1, Chrome 10+ */
+  background: -webkit-linear-gradient(top, #1a82f7, #C0D0F0);
+  /* Firefox 3.6+ */
+  background: -moz-linear-gradient(top,#1a1af7, #C0D0F0);
+  /* IE 10 */
+  background: -ms-linear-gradient(top, #1a1af7, #F0F0F0);
+  /* Opera 11.10+ */
+  background: -o-linear-gradient(top, #1a1af7, #F0F0F0);
+
+}
+
+
+#pomodoro_header {
+  width: 100%;
+  height: 30px; /*17%;*/
+  padding-top: 1px;
+  padding-right: 15px;
+}
+
+#pomodoro_header .pull-right {
+  margin-left: 10px;
+  color: white;
+}
+
+#pomodoro_header img {
+  margin-left: 12px;
+  margin-top: 0px;
+}
+
+#pomodoro_body  {
+  width: 97%;
+  height: 90%;
+  margin: auto;
+  position: relative; 
+  background-color: white; /*rgb(240,240,240); /*white;*/
+}
+
+#keypad {
+  position: relative;
+  /*top: 65px;*/
+}
+
+
+/* ? */
+#navbar {
+  padding-left: 0;
+}
+
+
+#first_row {
+  position: absolute;
+  top: 0;
+}
+
+#second_row {
+  position: absolute;
+  top: 52px;
+}
+
+#third_row {
+  position: absolute;
+  top: 104px;
+}
+
+#fourth_row {
+  position: absolute;
+  top: 156px;
+}
+
+#fifth_row {
+  position: absolute;
+  top: 207px;
+}
+
+.nav li:hover {
+  border: 1px solid lightgray;
+  z-index: 1;
+}
+
+
+.nav li {
+ width: 55px; /* making the li have the width makes it so that the buttons dont slide down */
+}
+
+/*
+.nav li a {
+  padding-top:  0;
+  padding-bottom: 0;
+}*/
+
+/* does nothing
+.nav li {
+  margin: 0;
+} */
+
+
+.container {
+  margin: auto;
+}
+
+/* minimum size for nav buttons */
+.nav span {
+  /*min-width: 40px;*/
+  width: 100%;
+  /*margin-top: 5px;*/
+}
+
+/* make nav glyphicon larger */
+span.glyphicon {
+  font-size: 1.2em;
+}
+
+#display {
+  /*position: relative;*/
+  /*background-color: green;*/
+  width: 100%;
+  height: 50px;
+
+}
+/*
+#display h2 {
+  position: absolute;
+  bottom: 0;
+}*/
+
+.key-button {
+  font-size: 1.5em;
+}
+
+.decimal-point {
+  font-size: 2.2em;
+}
+
+
+
+
+
+/* ********************************************************************/
+/* tomato */
+.red_tomato {
+  position: fixed;
+  right: 5%;
+  top: 5%;
+}
+
+.green_tomato {
+  position: fixed;
+  right: 5%;
+  top: 6%;
+}
+
+.tomato_container {
+  position: relative;
+}
+
+.tomato_container img {
+  transition: 0.4s;
+}
+
+.red_countdown {
+  position: absolute;
+  top: 25px;
+  left: 20px;
+  color: white;
+  font-size: 1.2em;
+}
+
+.red_single_countdown {
+  left: 24px;
+}
+
+.green_countdown {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  color: black;
+  font-size: 1.2em;
+}
+
+.green_single_countdown {
+  left: 20px;
+}
+
+.pomodoro_header img {
+  opacity: 0.4;
+  filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+
+
+
+/* following taken from http://nicolasgallagher.com/pure-css-speech-bubbles/demo/ */
+/* ============================================================================================================================
+== RECTANGLE-BORDER STYLE WITH CURVE
+** ============================================================================================================================ */
+
+.rectangle-speech-border {
+  position:relative;
+  padding:50px 15px;
+  margin:1em 0 3em;
+  border:10px solid #5a8f00;
+  text-align:center;
+  color:#333;
+  background: white; /* no difference #fff;*/
+  /* css3 */
+  -webkit-border-radius:20px;
+  -moz-border-radius:20px;
+  border-radius:20px;
+}
+
+/* creates larger curve */
+.rectangle-speech-border:before {
+  content:"";
+  position:absolute;
+  z-index:10;
+  bottom:-40px;
+  left:60px; /*50px;*/
+  width:50px;
+  height:30px;
+  border-style:solid;
+  border-width:0 10px 10px 0;
+  border-color:#5a8f00;
+  background:transparent;
+  /* css3 */
+  -webkit-border-bottom-right-radius:80px 50px;
+  -moz-border-radius-bottomright:80px 50px;
+  border-bottom-right-radius:80px 50px;
+  /* reduce the damage in FF3.0 */
+  display:block;
+}
+
+/* creates smaller curve */
+.rectangle-speech-border:after {
+  content:"";
+  position:absolute;
+  z-index:10;
+  bottom:-40px;
+  left:58px; /*50px;*/
+  width:20px;
+  height:30px;
+  border-style:solid;
+  border-width:0 10px 10px 0;
+  border-color:#5a8f00;
+  background:transparent;
+  /* css3 */
+  -webkit-border-bottom-right-radius:52px 50px;
+  -moz-border-radius-bottomright:52px 50px;
+  border-bottom-right-radius:52px 50px;
+  /* reduce the damage in FF3.0 */
+  display:block;
+}
+
+/* creates a small circle to produce a rounded point where the two curves meet */
+.rectangle-speech-border > :first-child:before {
+  content:"";
+  position:absolute;
+  bottom:-40px;
+  left:53px; /*45px;*/
+  width:10px;
+  height:10px;
+  background:#5a8f00;
+  /* css3 */
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+/* creates a white rectangle to cover part of the oval border*/
+
+.rectangle-speech-border > :first-child:after {
+  content:"";
+  position:absolute;
+  bottom: -29px;
+  left:78px;
+  width:22px;
+  height:32px;
+  background:#fff; 
+}
+
+
