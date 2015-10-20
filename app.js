@@ -83,16 +83,47 @@ app.directive('calculator', function() {
         $scope.moreThanMaxDisplay = ($scope.display.length > 13) ? true : false 
       }
 
+
+      // this function will have a side effect where it will check if the last call to submit has
+      // created a decimal value that has filled up the display, ie. 52/6 = 8.6666666666666 in which
+      // case the user would be locked out of future operations. So to address this, if the user wants
+      // to continue to use the last submitted value and the value has a decimal remainder, this function
+      // will chop down the decimal remainder portion of the value
       notTooManyInputCharacters = function() {
+        console.log("notTooManyInputCharacters() invoked")
         // will check for < 16
         // if false will then check if more than 2 digits to the right of decimal and crop to 2 digits
-        return $scope.input.length < 16
+        //return $scope.input.length < 16
+        if ($scope.input.length < 16) return true
+        if (!submitJustExecuted) {
+          $scope.display = "Too many digits"
+          return false // 16 characters and not the result of user hitting submit
+        }
+        // here we have 16 characters as the result of user hitting submit
+        var decimal_index = $scope.input.indexOf('.')
+        console.log("decimal_index = "+decimal_index)
+        if (decimal_index == -1) return false // no fractional part
+        var rhs_length = $scope.input.length - (decimal_index+1) // +1 take into account decimal itself
+        var lhs_length = $scope.input.length - (rhs_length+1) // +1 take into account decimal itself
+        console.log("rhs_length = "+rhs_length)
+        console.log("lhs_length = "+lhs_length)
+        var lhs = $scope.input.slice(0,lhs_length)
+        var rhs = $scope.input.slice(lhs_length+1) // til the end
+        console.log("lhs = "+lhs)
+        console.log("rhs = "+rhs)
+        if (lhs_length >= 8) { 
+          $scope.input = lhs // more than 8 characters in lhs, then just send back lhs
+        } else {
+            $scope.input = lhs + '.' + rhs.slice(0,8-lhs_length)
+        }
+        checkLength() // just in case
+        return true
       }
 
       $scope.clear = function() {
         $scope.moreThanMaxInput = false  // are these needed here
         $scope.moreThanMaxDisplay = false
-        $scope.input     = ''   // dispay zeroed out in all_false()
+        $scope.input     = ''   // display zeroed out in all_false()
         all_false()
         openParenCount   = 0
         decimalEntered   = false
@@ -109,7 +140,7 @@ app.directive('calculator', function() {
             $scope.clear()
           }
           if (!parenJustClosed) {  // prevent following case: (1+2) 4         
-            history.push("number("+value+")")
+            history.push("$scope.number("+value+")")
             if (acceptingNumber) { // this is not the first digit
               $scope.input += value        
             } else { // first digit          
@@ -124,6 +155,7 @@ app.directive('calculator', function() {
       }
 
 
+
       $scope.operator = function(value) {
           
 // what about acceptingNumber not asserted, what will happen
@@ -131,7 +163,7 @@ app.directive('calculator', function() {
         console.log("operator("+value+") invoked")
         if (notTooManyInputCharacters()) {
           if (acceptingNumber || parenJustClosed) { // end of the number
-            history.push("operator('"+value+"')")
+            history.push("$scope.operator('"+value+"')")
             //if (value == '/') value = '\367' //this works for display but not for eval, so i would need to build an eval
             // version, same for multiply if i choose a different icon that *
             $scope.input += value
@@ -145,14 +177,14 @@ app.directive('calculator', function() {
 
       $scope.decimalPoint = function() {
                
-        console.log("decimalPoint() invoked")
+        console.log("$scope.decimalPoint() invoked")
         if (notTooManyInputCharacters()) {
           if (submitJustExecuted) { // user wants to ignore result from previous submit
             $scope.clear()
           }  
           // sometimes . will not be valid given the context - not valid if number already has a decimal
           if (!parenJustClosed) { // prevent following case: (3+4) 0.
-            history.push("decimalPoint()") 
+            history.push("$scope.decimalPoint()") 
             if (!decimalEntered) { // only add a decimal if the number doesnt already have one
               if (acceptingNumber) { // not the first digit
                 $scope.input += '.'
@@ -171,7 +203,7 @@ app.directive('calculator', function() {
       
       $scope.paren = function() {
         if (notTooManyInputCharacters()) {
-          history.push("paren()") // paren is always accepted
+          history.push("$scope.paren()") // paren is always accepted
           if (openParenCount === 0) {
             console.log("Parens A")
             if (acceptingNumber || parenJustClosed) {  // 3( => 3*(  or (a+b)( => (a+b)*(
@@ -226,7 +258,7 @@ app.directive('calculator', function() {
             console.log("Negative just executed. Remove last negative() call")
             $scope.backspace()
           } else {
-            history.push("negative()")
+            history.push("$scope.negative()")
             if (acceptingNumber || parenJustClosed) {  // 3( => 3*(  or (a+b)( => (a+b)*(
               console.log("Parens B")
               $scope.input += '*'
@@ -239,6 +271,14 @@ app.directive('calculator', function() {
           }
           checkLength()
         }
+      }
+
+      // this function is needed to retain the state that submitJustExecuted was hit that would be lost
+      // in the history if number() was directly invoked instead
+      var submitNumber = function(value) {
+        console.log("submitNumber() invoked")
+        $scope.number(value)
+        submitJustExecuted = true
       }
 
       $scope.submit = function() {               
@@ -257,7 +297,7 @@ app.directive('calculator', function() {
             console.log("display = "+$scope.display)
             console.log("input = "+$scope.input)
             history = []
-            history.push("number("+$scope.input+")")
+            history.push("submitNumber("+$scope.input+")")
             console.log(history)
             // no need for all_false() because parens above keeps state correct, and if no parens (ie simple number) we are in
             // good state already
@@ -279,7 +319,7 @@ app.directive('calculator', function() {
         $scope.clear()
         keypresses.forEach(function(keypress) {
           //console.log("$scope."+keypress)
-          eval("$scope."+keypress)
+          eval(keypress)
         })
         checkLength()
       }

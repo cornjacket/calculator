@@ -15,9 +15,9 @@
         <div class='container-fluid'>  <!-- class is container has no effect on the gray strip -->
             <ul class='nav navbar-nav'>
               <li><a ng-click='clear()' href='#'><div class='text-center key-button'>C</div></a></li>
-              <li><a ng-click='operator("/")' href='#'><div class='text-center key-button'>&divide;</div></a></li>
-              <li><a ng-click='operator("*")' href='#'><div class='text-center key-button'><i class="fa fa-times"></i></div></a></li>
-              <li><a ng-click='backspace()' href='#'><div class='text-center'><i class="fa fa-step-backward fa-lg"></i></div></a></li>
+              <li><a ng-click='operator("/")' href='#'><div class='text-center key-button-lg'>&divide;</div></a></li>
+              <li><a ng-click='operator("*")' href='#'><div class='text-center key-button-lg'>&times;</div></a></li>
+              <li><a ng-click='backspace()' href='#'><div class='text-center key-button-lg'>&lArr;</div></a></li>
             </ul>
         </div>
       </div>
@@ -27,7 +27,7 @@
               <li><a ng-click='number(7)' href='#'><div class='text-center key-button'>7</div></a></li>
               <li><a ng-click='number(8)' href='#'><div class='text-center key-button'>8</div></a></li>
               <li><a ng-click='number(9)' href='#'><div class='text-center key-button'>9</div></a></li>
-              <li><a ng-click='operator("-")' href='#'><div><span class='glyphicon glyphicon-minus text-center' aria-hidden='true'></span></div></a></li>
+              <li><a ng-click='operator("-")' href='#'><div class='text-center key-button-lg'>&minus;</div></a></li>
             </ul>
         </div>
       </div>
@@ -37,7 +37,7 @@
               <li><a ng-click='number(4)' href='#'><div class='text-center key-button'>4</div></a></li>
               <li><a ng-click='number(5)' href='#'><div class='text-center key-button'>5</div></a></li>
               <li><a ng-click='number(6)' href='#'><div class='text-center key-button'>6</div></a></li>
-              <li><a ng-click='operator("+")' href='#'><div><span class='glyphicon glyphicon-plus text-center' aria-hidden='true'></span></div></a></li>
+              <li><a ng-click='operator("+")' href='#'><div class='text-center key-button-lg'>+</div></a></li>
             </ul>
         </div>
       </div>
@@ -56,8 +56,8 @@
             <ul class='nav navbar-nav'>
               <li><a ng-click='number(0)' href='#'><div class='text-center key-button'>0</div></a></li>
               <li><a ng-click='decimalPoint()' href='#'><div class='text-center decimal-point'>.</div></a></li>
-              <li><a ng-click='negative()' href='#'><div class='text-center key-button'>+/-</div></a></li>
-              <li><a ng-click='submit()' href='#'><div class='text-center decimal-point'>=</div></a></li>
+              <li><a ng-click='negative()' href='#'><div class='text-center key-button'>&plusmn;</div></a></li>
+              <li><a ng-click='submit()' href='#'><div class='text-center key-button-lg'>=</div></a></li>
             </ul>
         </div>
       </div>    
