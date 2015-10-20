@@ -1,9 +1,9 @@
-<div id='pomodoro_tile' ng-show='controlDisplay'>
-  <div id='pomodoro_header'>
+<div id='window_tile' ng-show='controlDisplay'>
+  <div id='window_header'>
     <img src='http://dts.utah.gov/img/icon-calculator.png' width='20px'>
     <a href='#' ng-click="cancelControl()"><span class='pull-right'>X</span></a>
   </div>
-  <div id='pomodoro_body'>
+  <div id='window_body'>
     <div id='display' class='text-right' ng-class="moreThanMaxDisplay ? 'h3' : 'h2'">
       {{ display }}
     </div>
@@ -70,11 +70,8 @@
 </div>
 
 <a href='#' title='{{hoverMessage}}'>
-  <div class='red_tomato' ng-click='displayControl()'>
-    <div class='tomato_container'>
-      <div class='red_countdown text-center' ng-class="{'red_single_countdown':singleCountdown}"><strong>{{tomatoTime}}</strong></div>
-      <img src='http://dts.utah.gov/img/icon-calculator.png' width='60px'>
-    </div>
+  <div class='calc' ng-click='displayControl()'>
+    <img src='http://dts.utah.gov/img/icon-calculator.png' width='60px'>
   </div>
 </a>
 

@@ -22,7 +22,7 @@ html {
   left: 19%;
 }
 
-#pomodoro_tile {
+#window_tile {
   position: fixed;
   top: 40px;
   right: 200px;
@@ -53,24 +53,24 @@ html {
 }
 
 
-#pomodoro_header {
+#window_header {
   width: 100%;
   height: 30px; /*17%;*/
   padding-top: 1px;
   padding-right: 15px;
 }
 
-#pomodoro_header .pull-right {
+#window_header .pull-right {
   margin-left: 10px;
   color: white;
 }
 
-#pomodoro_header img {
+#window_header img {
   margin-left: 12px;
   margin-top: 3px;
 }
 
-#pomodoro_body  {
+#window_body  {
   width: 97%;
   height: 90%;
   margin: auto;
@@ -125,17 +125,6 @@ html {
  width: 55px; /* making the li have the width makes it so that the buttons dont slide down */
 }
 
-/*
-.nav li a {
-  padding-top:  0;
-  padding-bottom: 0;
-}*/
-
-/* does nothing
-.nav li {
-  margin: 0;
-} */
-
 
 .container {
   margin: auto;
@@ -152,16 +141,6 @@ html {
 span.glyphicon {
   font-size: 1.2em;
 }
-
-/*
-#input {
-  background-color: yellow;
-}
-
-#display {
-  background-color: green;
-}
-*/
 
 #input, #display {
   width: 100%;
@@ -180,8 +159,6 @@ span.glyphicon {
   white-space: nowrap;
   overflow: hidden;
   color: gray;
-
-  /*text-overflow: clip;*/
 }
 
 .key-button {
@@ -200,7 +177,7 @@ span.glyphicon {
 
 /* ********************************************************************/
 /* tomato */
-.red_tomato {
+.calc {
   position: fixed;
   right: 5%;
   top: 5%;
@@ -212,7 +189,7 @@ span.glyphicon {
   top: 6%;
 }
 
-.tomato_container {
+.calc_container {
   position: relative;
 }
 
@@ -243,13 +220,6 @@ span.glyphicon {
 .green_single_countdown {
   left: 20px;
 }
-
-/*
-#pomodoro_header img { /* this is not a class 0 is it working ?? 
-  opacity: 0.4;
-  filter: alpha(opacity=40); /* For IE8 and earlier 
-}
-*/
 
 /* following taken from http://nicolasgallagher.com/pure-css-speech-bubbles/demo/ */
 /* ============================================================================================================================
