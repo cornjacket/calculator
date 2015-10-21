@@ -17,7 +17,7 @@ app.controller("MainController", function($scope, $interval) {
 
   var messages = [
         "Click the calculator in the top right corner.",
-        "Excellent!! Now use the calculator.",
+        "Excellent!! Now do some math.",
 
       ]
 
