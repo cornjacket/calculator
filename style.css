@@ -1,39 +1,38 @@
 html {
   height: 100%;
-  /*background: url("http://www.drlamperti.com/uploads/images/peter-griffin-family-guy-cleft-chin-photo.jpg");*/
-  /*background: url("images/ksw_01.jpg");*/
-  background: url("images/star_destroyer_bridge.jpg");
+  /*background: url("https://s-media-cache-ak0.pinimg.com/originals/67/2c/68/672c68836fe24c6d5e1b057c7b3a524d.jpg");*/
+  background: url("images/classroom.jpg");
   background-size: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: left bottom;
 }
 
-#darth_stewie {
+#stewie {
   position: fixed;
-  bottom: 2%;
+  bottom: 1%;
   left: 3%;
 }
 
 #instructions {
   position: fixed;
   width: 400px;
-  bottom: 33%; /*270px;*/
-  left: 19%;
+  bottom: 39%; /*270px;*/
+  left: 21%;
 }
 
 #window_tile {
   position: fixed;
   top: 40px;
   right: 200px;
-  width: 263px;
+  width: 265px;   /*263px;*/
   height: 420px; 
   padding: 0;
   z-index: 99998;
   border: 1px solid gray;
   border-radius: 5px;
 
-  box-shadow: 7px 7px 5px  #A0A0A0; /*#888888; #B0B0B0; */
+  /*box-shadow: 7px 7px 5px  #A0A0A0; /*#888888; #B0B0B0; */
 
   /* fallback */
   background-color: #1a82f7;
@@ -42,7 +41,7 @@ html {
   /* Safari 4-5, Chrome 1-9 */
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1a82f7), to(#F0F0F0));
   /* Safari 5.1, Chrome 10+ */
-  background: -webkit-linear-gradient(top, #1a82f7, #C0D0F0);
+  background: -webkit-linear-gradient(top, #555, #888888); /*lightgray); /*#a9a9a9, lightgray);
   /* Firefox 3.6+ */
   background: -moz-linear-gradient(top,#1a1af7, #C0D0F0);
   /* IE 10 */
@@ -71,8 +70,8 @@ html {
 }
 
 #window_body  {
-  width: 97%;
-  height: 90%;
+  width: 96%; /*97%;*/
+  height: 91%;
   margin: auto;
   position: relative; 
   background-color: white; /*rgb(240,240,240); /*white;*/
@@ -144,7 +143,7 @@ span.glyphicon {
 
 #input, #display {
   width: 100%;
-  height: 50px;
+  height: 54px;
   margin: 0;
   padding-top: 15px; /* quick fix to move down */
   padding-left: 5px;
@@ -183,43 +182,6 @@ span.glyphicon {
   top: 5%;
 }
 
-.green_tomato {
-  position: fixed;
-  right: 5%;
-  top: 6%;
-}
-
-.calc_container {
-  position: relative;
-}
-
-.tomato_container img {
-  transition: 0.4s;
-}
-
-.red_countdown {
-  position: absolute;
-  top: 25px;
-  left: 20px;
-  color: white;
-  font-size: 1.2em;
-}
-
-.red_single_countdown {
-  left: 24px;
-}
-
-.green_countdown {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  color: black;
-  font-size: 1.2em;
-}
-
-.green_single_countdown {
-  left: 20px;
-}
 
 /* following taken from http://nicolasgallagher.com/pure-css-speech-bubbles/demo/ */
 /* ============================================================================================================================
